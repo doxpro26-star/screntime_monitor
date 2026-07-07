@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  screen-time-monitor:
+    build: .
+    image: screen-time-monitor:latest
+    container_name: screen-time-monitor
+    
+    # Access to camera (uncomment if using local camera)
+    # devices:
+    #   - /dev/video0:/dev/video0
+    
+    # Persistent data storage
+    volumes:
+      - ./data:/app/data
+      - ./config.yaml:/app/config.yaml
+    
+    # Port mapping for web server
+    ports:
+      - "5000:5000"
+    
+    # Environment variables
+    environment:
+      - PYTHONUNBUFFERED=1
+      - FLASK_ENV=production
+    
+    # Auto-restart on failure
+    restart: unless-stopped
+    
+    # Resource limits (optional)
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 1G
+        reservations:
+          cpus: '1'
+          memory: 512M
+    
+    # Logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

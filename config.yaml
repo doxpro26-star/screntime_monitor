@@ -1,0 +1,39 @@
+# Screen Time Monitor Configuration
+
+# Camera Settings
+camera:
+  device_id: 0  # Default webcam
+  width: 640
+  height: 480
+  fps: 30
+
+# Detection Settings
+detection:
+  model: "yolov8n.pt"  # nano model for speed (use yolov8s.pt for better accuracy)
+  confidence_threshold: 0.5
+  process_every_n_frames: 3  # Process every 3rd frame for optimization
+  device: "cpu"  # Use "cuda" if GPU available
+  
+  # COCO classes for detection
+  target_classes:
+    phone: 67  # cell phone
+    laptop: 63  # laptop
+
+# Tracking Settings
+tracking:
+  min_detection_time: 1.0  # Minimum seconds before counting (reduces false positives)
+  save_interval: 30  # Auto-save every 30 seconds
+  
+# Data Storage
+storage:
+  data_dir: "data"
+  session_file: "data/sessions.json"
+  current_session_file: "data/current_session.json"
+
+# Display Settings
+display:
+  show_feed: true
+  show_boxes: true
+  show_labels: true
+  show_confidence: true
+  show_timer: true
